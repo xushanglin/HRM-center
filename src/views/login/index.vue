@@ -72,6 +72,9 @@
 import { validMobile, validPassword } from '@/utils/validate'
 // 导入登录请求
 import { login } from '@/api/user'
+// cookie操作
+import { setToken } from '@/utils/auth'
+import { Message } from 'element-ui'
 export default {
   name: 'Login',
   data() {
@@ -123,6 +126,12 @@ export default {
     handleLogin() {
       login(this.loginForm).then(res => {
         console.log(res)
+        const { message, data, success } = res.data
+        if (success) {
+          console.log('token:' + data)
+          Message.success(message)
+          setToken(data)
+        }
       })
       // axios({
       //   method: 'post',
