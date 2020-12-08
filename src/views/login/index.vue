@@ -14,15 +14,15 @@
         </h3>
       </div>
 
-      <el-form-item prop="moblie">
+      <el-form-item prop="mobile">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="moblie"
-          v-model="loginForm.moblie"
+          ref="mobile"
+          v-model="loginForm.mobile"
           placeholder="请输入手机号"
-          name="moblie"
+          name="mobile"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -69,26 +69,26 @@
 
 <script>
 // 导入验证规则
-import { validMoblie, validPassword } from '@/utils/validate'
-
+import { validMobile, validPassword } from '@/utils/validate'
+import axios from 'axios'
 export default {
   name: 'Login',
   data() {
-    const validateMoblie = (rule, value, callback) => {
-      validMoblie(value) ? callback() : callback(new Error('手机号不合法'))
+    const validateMobile = (rule, value, callback) => {
+      validMobile(value) ? callback() : callback(new Error('手机号不合法'))
     }
     const validatePassword = (rule, value, callback) => {
       validPassword(value) ? callback() : callback(new Error('密码在6到16位之间'))
     }
     return {
       loginForm: {
-        moblie: 'admin',
-        password: '111111'
+        mobile: '13800000002',
+        password: '123456'
       },
       loginRules: {
-        moblie: [
+        mobile: [
           { required: true, trigger: 'blur', message: '手机号不能为空' },
-          { trigger: 'blur', validator: validateMoblie }
+          { trigger: 'blur', validator: validateMobile }
         ],
         password: [
           { required: true, trigger: 'blur', message: '密码不能为空' },
@@ -120,23 +120,30 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.loading = true
-          this.$store
-            .dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/' })
-              this.loading = false
-            })
-            .catch(() => {
-              this.loading = false
-            })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
+      axios({
+        method: 'post',
+        url: 'http://ihrm-java.itheima.net/api/sys/login',
+        data: this.loginForm
+      }).then(res => {
+        console.log(res.data)
       })
+      // this.$refs.loginForm.validate((valid) => {
+      //   if (valid) {
+      //     this.loading = true
+      //     this.$store
+      //       .dispatch('user/login', this.loginForm)
+      //       .then(() => {
+      //         this.$router.push({ path: this.redirect || '/' })
+      //         this.loading = false
+      //       })
+      //       .catch(() => {
+      //         this.loading = false
+      //       })
+      //   } else {
+      //     console.log('error submit!!')
+      //     return false
+      //   }
+      // })
     }
   }
 }
