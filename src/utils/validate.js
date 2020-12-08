@@ -19,7 +19,7 @@ export function validUsername(str) {
   return valid_map.indexOf(str.trim()) >= 0
 }
 
-export function validMoblie(data) {
+export function validMobile(data) {
   //  验证规则
   return /^1[3~9]\d{9}$/.test(data)
 }
