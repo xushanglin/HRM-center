@@ -122,7 +122,7 @@ export default {
     handleLogin() {
       axios({
         method: 'post',
-        url: 'http://ihrm-java.itheima.net/api/sys/login',
+        url: '/api/sys/login',
         data: this.loginForm
       }).then(res => {
         console.log(res.data)
