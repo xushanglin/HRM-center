@@ -70,7 +70,8 @@
 <script>
 // 导入验证规则
 import { validMobile, validPassword } from '@/utils/validate'
-import axios from 'axios'
+// 导入登录请求
+import { login } from '@/api/user'
 export default {
   name: 'Login',
   data() {
@@ -120,13 +121,16 @@ export default {
       })
     },
     handleLogin() {
-      axios({
-        method: 'post',
-        url: '/api/sys/login',
-        data: this.loginForm
-      }).then(res => {
-        console.log(res.data)
+      login(this.loginForm).then(res => {
+        console.log(res)
       })
+      // axios({
+      //   method: 'post',
+      //   url: '/api/sys/login',
+      //   data: this.loginForm
+      // }).then(res => {
+      //   console.log(res.data)
+      // })
       // this.$refs.loginForm.validate((valid) => {
       //   if (valid) {
       //     this.loading = true
