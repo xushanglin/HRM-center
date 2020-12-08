@@ -73,7 +73,7 @@ import { validMobile, validPassword } from '@/utils/validate'
 // 导入登录请求
 import { login } from '@/api/user'
 // cookie操作
-import { setToken } from '@/utils/auth'
+// import { setToken } from '@/utils/auth'
 import { Message } from 'element-ui'
 export default {
   name: 'Login',
@@ -130,33 +130,10 @@ export default {
         if (success) {
           console.log('token:' + data)
           Message.success(message)
-          setToken(data)
+          // setToken(data)
+          this.$store.commit('user/saveToken', data)
         }
       })
-      // axios({
-      //   method: 'post',
-      //   url: '/api/sys/login',
-      //   data: this.loginForm
-      // }).then(res => {
-      //   console.log(res.data)
-      // })
-      // this.$refs.loginForm.validate((valid) => {
-      //   if (valid) {
-      //     this.loading = true
-      //     this.$store
-      //       .dispatch('user/login', this.loginForm)
-      //       .then(() => {
-      //         this.$router.push({ path: this.redirect || '/' })
-      //         this.loading = false
-      //       })
-      //       .catch(() => {
-      //         this.loading = false
-      //       })
-      //   } else {
-      //     console.log('error submit!!')
-      //     return false
-      //   }
-      // })
     }
   }
 }
