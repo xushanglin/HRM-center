@@ -21,18 +21,24 @@ export default {
   // 执行异步
   actions: {
     // context是当前store实例
-    gologin(context, data) {
-      // 登录成功保存token
-      login(data).then(res => {
-        const { message, data, success } = res.data
-        if (success) {
-          console.log('token:' + data)
-          Message.success(message)
-          // setToken(data)
-          context.commit('saveToken', data)
-        }
-      })
+    async  gologin(context, data) {
+      const resolve = await login(data)
+      if (resolve.data.success) {
+        context.commit('saveToken', data)
+        Message.success(resolve.data.message)
+      }
     }
+    // 登录成功保存token
+    // login(data).then(res => {
+    //   const { message, data, success } = res.data
+    //   if (success) {
+    //     console.log('token:' + data)
+    //     Message.success(message)
+    //     // setToken(data)
+    //     context.commit('saveToken', data)
+    //   }
+    // })
+
   }
 }
 
